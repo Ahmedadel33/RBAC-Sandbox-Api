@@ -1,0 +1,519 @@
+{
+  "info": {
+    "name": "Audex Sandbox API",
+    "description": "Collection for Auth, Projects, Roles and Permissions endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Admin User\",\n  \"email\": \"admin@test.com\",\n  \"password\": \"password123\",\n  \"role\": \"admin\",\n  \"department\": \"IT\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = pm.response.json();",
+                  "if (json && json.token) {",
+                  "  pm.collectionVariables.set('token', json.token);",
+                  "}",
+                  "const setCookie = pm.response.headers.get('Set-Cookie') || '';",
+                  "const match = setCookie.match(/token=([^;]+)/);",
+                  "if (match && match[1]) {",
+                  "  pm.collectionVariables.set('token', match[1]);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@test.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Projects",
+      "item": [
+        {
+          "name": "Get All Projects",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "token={{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/projects",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "projects"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Project By ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "token={{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/projects/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "projects",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "66f4d3d2c0d2f5d8a1b2c3d4",
+                  "description": "Project ID"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Project",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "token={{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Website Redesign\",\n  \"description\": \"Update the landing page and dashboard UI\",\n  \"department\": \"Design\",\n  \"assignedTo\": \"\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/projects",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "projects"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Project",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "token={{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Updated Project Name\",\n  \"description\": \"Updated project description\",\n  \"department\": \"IT\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/projects/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "projects",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "66f4d3d2c0d2f5d8a1b2c3d4",
+                  "description": "Project ID"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Project",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "token={{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/projects/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "projects",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "66f4d3d2c0d2f5d8a1b2c3d4",
+                  "description": "Project ID"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Roles",
+      "item": [
+        {
+          "name": "Get All Roles",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "token={{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/roles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "roles"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Role",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "token={{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"editor\",\n  \"description\": \"Can edit projects\",\n  \"permissions\": []\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/roles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "roles"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Role",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "token={{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"editor\",\n  \"description\": \"Updated editor permissions\",\n  \"permissions\": []\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/roles/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "roles",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "66f4d3d2c0d2f5d8a1b2c3d4",
+                  "description": "Role ID"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Role",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "token={{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/roles/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "roles",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "66f4d3d2c0d2f5d8a1b2c3d4",
+                  "description": "Role ID"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Permissions",
+      "item": [
+        {
+          "name": "Get All Permissions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "token={{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/permissions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "permissions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Permission",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "token={{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Create Reports\",\n  \"method\": \"POST\",\n  \"path\": \"/api/reports\",\n  \"description\": \"Allows user to create reports\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/permissions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "permissions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Permission",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "token={{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Create Reports\",\n  \"method\": \"POST\",\n  \"path\": \"/api/reports\",\n  \"description\": \"Updated reports permission\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/permissions/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "permissions",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "66f4d3d2c0d2f5d8a1b2c3d4",
+                  "description": "Permission ID"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Permission",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "token={{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/permissions/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "permissions",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "66f4d3d2c0d2f5d8a1b2c3d4",
+                  "description": "Permission ID"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

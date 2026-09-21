@@ -39,7 +39,7 @@ describe('Project API & RBAC Tests (Real DB & Fresh Token)', () => {
 
     const token = jwt.sign(
       { id: adminUser._id, role: adminUser.role }, 
-      process.env.JWT_SECRET || 'your_super_secret_key_here', 
+      process.env.JWT_SECRET || 'your_super_secret_key_here',
       { expiresIn: '1d' }
     );
 
