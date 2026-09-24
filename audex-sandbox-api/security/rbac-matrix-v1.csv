@@ -1,0 +1,50 @@
+Endpoint,Method,Allowed Roles,Department Match Required,Ownership Check Required,Final Decision
+# ==============================================================================
+# SECTION 1: SANDBOX CODE ENDPOINTS (Implemented in postman_collection.json - 15 Endpoints)
+# ==============================================================================
+/api/auth/register,POST,Visitor,NOT_REQUIRED,NOT_REQUIRED,ALLOW
+/api/auth/login,POST,Visitor,NOT_REQUIRED,NOT_REQUIRED,ALLOW
+/api/projects,GET,Admin/Manager/User,REQUIRED_FOR_NON_ADMIN,NOT_REQUIRED,ALLOW_IF_DEPT_MATCH
+/api/projects/:id,GET,Admin/Manager/User,REQUIRED_FOR_NON_ADMIN,REQUIRED_FOR_NON_ADMIN,ALLOW_IF_OWNER_OR_DEPT
+/api/projects,POST,Admin/Manager,REQUIRED_FOR_MANAGER,NOT_REQUIRED,ALLOW_IF_DEPT_MATCH
+/api/projects/:id,PUT,Admin/Manager,REQUIRED_FOR_MANAGER,REQUIRED_FOR_MANAGER,ALLOW_IF_OWNER
+/api/projects/:id,DELETE,Admin,NOT_REQUIRED,NOT_REQUIRED,ALLOW_ADMIN_ONLY
+/api/roles,GET,Admin,NOT_REQUIRED,NOT_REQUIRED,ALLOW_ADMIN_ONLY
+/api/roles,POST,Admin,NOT_REQUIRED,NOT_REQUIRED,ALLOW_ADMIN_ONLY
+/api/roles/:id,PUT,Admin,NOT_REQUIRED,NOT_REQUIRED,ALLOW_ADMIN_ONLY
+/api/roles/:id,DELETE,Admin,NOT_REQUIRED,NOT_REQUIRED,ALLOW_ADMIN_ONLY
+/api/permissions,GET,Admin,NOT_REQUIRED,NOT_REQUIRED,ALLOW_ADMIN_ONLY
+/api/permissions,POST,Admin,NOT_REQUIRED,NOT_REQUIRED,ALLOW_ADMIN_ONLY
+/api/permissions/:id,PUT,Admin,NOT_REQUIRED,NOT_REQUIRED,ALLOW_ADMIN_ONLY
+/api/permissions/:id,DELETE,Admin,NOT_REQUIRED,NOT_REQUIRED,ALLOW_ADMIN_ONLY
+# ==============================================================================
+# SECTION 2: FULL AUDEX PLATFORM EXPANDED SCOPE (System Design Architecture Endpoints)
+# ==============================================================================
+/api/v1/context/mode,GET,Admin/Manager/User,REQUIRED,NOT_REQUIRED,ALLOW_IF_SCHOOL_MATCH
+/api/v1/context/switch-mode,POST,Admin/Manager,REQUIRED,NOT_REQUIRED,ALLOW_IF_DEPT_MATCH
+/api/v1/context/switch-school,POST,Admin,NOT_REQUIRED,NOT_REQUIRED,ALLOW_ADMIN_ONLY
+/api/v1/analytics/overview,GET,Admin/Manager/User,REQUIRED_FOR_NON_ADMIN,NOT_REQUIRED,ALLOW_IF_DEPT_MATCH
+/api/v1/analytics/financials/roi,GET,Admin/Manager,REQUIRED,NOT_REQUIRED,ALLOW_IF_DEPT_MATCH
+/api/v1/analytics/capacity,GET,Admin/Manager/User,REQUIRED,NOT_REQUIRED,ALLOW_IF_DEPT_MATCH
+/api/v1/analytics/forecasts,POST,Admin/Manager,REQUIRED,NOT_REQUIRED,ALLOW_IF_DEPT_MATCH
+/api/v1/simulations/scenarios,GET,Admin/Manager,REQUIRED,NOT_REQUIRED,ALLOW_IF_DEPT_MATCH
+/api/v1/simulations/scenarios,POST,Admin/Manager,REQUIRED,NOT_REQUIRED,ALLOW_IF_DEPT_MATCH
+/api/v1/simulations/scenarios/:id,PUT,Admin/Manager,REQUIRED,REQUIRED,ALLOW_IF_OWNER
+/api/v1/simulations/scenarios/:id/run,POST,Admin/Manager,REQUIRED,REQUIRED,ALLOW_IF_OWNER
+/api/v1/evidence/upload,POST,Admin/Manager,REQUIRED,NOT_REQUIRED,ALLOW_IF_DEPT_MATCH
+/api/v1/evidence,GET,Admin/Manager/User,REQUIRED,NOT_REQUIRED,ALLOW_IF_SCHOOL_MATCH
+/api/v1/rag/query,POST,Admin/Manager/User,REQUIRED,NOT_REQUIRED,ALLOW_IF_SCHOOL_MATCH
+/api/v1/regulatory/rules,GET,Admin/Manager/User,NOT_REQUIRED,NOT_REQUIRED,ALLOW
+/api/v1/academic/performance,GET,Admin/Manager/User,REQUIRED,NOT_REQUIRED,ALLOW_IF_DEPT_MATCH
+/api/v1/academic/risks,GET,Admin/Manager/User,REQUIRED,NOT_REQUIRED,ALLOW_IF_DEPT_MATCH
+/api/v1/hr/workforce-coverage,GET,Admin/Manager,REQUIRED,NOT_REQUIRED,ALLOW_IF_DEPT_MATCH
+/api/v1/hr/workload-risks,GET,Admin/Manager,REQUIRED,NOT_REQUIRED,ALLOW_IF_DEPT_MATCH
+/api/v1/operations/fleet-status,GET,Admin/Manager,REQUIRED,NOT_REQUIRED,ALLOW_IF_DEPT_MATCH
+/api/v1/inventory/shortages,GET,Admin/Manager/User,REQUIRED,NOT_REQUIRED,ALLOW_IF_DEPT_MATCH
+/api/v1/workflows/pending,GET,Admin/Manager,REQUIRED,NOT_REQUIRED,ALLOW_IF_DEPT_MATCH
+/api/v1/workflows/:id/approve,POST,Admin/Manager,REQUIRED,REQUIRED,ALLOW_IF_ASSIGNED_APPROVER
+/api/v1/workflows/:id/reject,POST,Admin/Manager,REQUIRED,REQUIRED,ALLOW_IF_ASSIGNED_APPROVER
+/api/v1/audit/logs,GET,Admin,NOT_REQUIRED,NOT_REQUIRED,ALLOW_ADMIN_ONLY
+/api/v1/audit/trace/:decisionId,GET,Admin/Manager,REQUIRED,NOT_REQUIRED,ALLOW_IF_DEPT_MATCH
+/api/v1/settings/health,GET,Admin,NOT_REQUIRED,NOT_REQUIRED,ALLOW_ADMIN_ONLY
+/api/v1/settings/ai-config,GET,Admin,NOT_REQUIRED,NOT_REQUIRED,ALLOW_ADMIN_ONLY
